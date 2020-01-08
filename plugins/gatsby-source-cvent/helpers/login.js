@@ -4,7 +4,7 @@ const {
   loginAction,
 } = require('../methods');
 
-const login = async (configOptions) => {
+const login = async (configOptions, reporter) => {
   const xml = loginAction.xml
     .replace('%%CVENT_ACCOUNT%%', configOptions.account)
     .replace('%%CVENT_USERNAME%%', configOptions.username)
