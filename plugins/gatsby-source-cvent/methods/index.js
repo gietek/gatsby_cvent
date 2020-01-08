@@ -3,6 +3,7 @@ const xmlParser = require('xml-js');
 
 const loginAction = require('./login');
 const listAction = require('./list');
+const fetchObjectAction = require('./fetchObject');
 
 const headers = {
   'Content-Type': 'text/xml;charset=UTF-8',
@@ -44,4 +45,5 @@ module.exports = {
   getResult,
   loginAction,
   listAction,
+  fetchObjectAction,
 };

@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const login = require('./helpers/login');
 const listEventIds = require('./helpers/listEventIds');
+const fetchEvent = require('./helpers/fetchEvent');
 
 exports.sourceNodes = async ({
   actions,
@@ -16,13 +17,12 @@ exports.sourceNodes = async ({
   const sessionHeader = await login(configOptions);
   const eventIds = await listEventIds(sessionHeader);
 
-  // eventIds.map(async (eventId) => {
-
-  // });
+  const eventPromises = eventIds.map(eventId => fetchEvent(sessionHeader, eventId));
+  const eventsList = await Promise.all(eventPromises);
 
   console.log({
-    eventIds
+    eventsList
   });
 
-  return;
+  return eventsList;
 }
