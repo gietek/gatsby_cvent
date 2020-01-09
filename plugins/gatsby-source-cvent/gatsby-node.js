@@ -22,12 +22,6 @@ exports.sourceNodes = async ({
 
   const eventPromises = eventIds.map(eventId => fetchEvent(sessionHeader, eventId));
   const eventsList = await Promise.all(eventPromises);
-  console.log(eventsList);
 
-  eventsList.forEach(event => {
-    const nodeData = processEvent(event, createNodeId, createContentDigest);
-    createNode(nodeData);
-  });
-
-  return eventsList;
+  eventsList.forEach(event => processEvent(event, createNode, createNodeId, createContentDigest));
 }
