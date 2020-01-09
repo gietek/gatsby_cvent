@@ -4,10 +4,10 @@ const {
   EVENT_TYPE,
 } = require('../consts');
 
-const processEvent = (event, createNode, createNodeId, createContentDigest) => {
+const processEvent = (event, createNodeId, createContentDigest) => {
   const attributes = getAttributes(event, EVENT_ATTRIBUTES);
 
-  const nodeId = createNodeId(`cvent-${attributes.id}`)
+  const nodeId = createNodeId(`${EVENT_TYPE}-${attributes.id}`)
   const nodeContent = JSON.stringify(event)
   const nodeData = Object.assign({}, {
     id: nodeId,
@@ -19,9 +19,17 @@ const processEvent = (event, createNode, createNodeId, createContentDigest) => {
       contentDigest: createContentDigest(event),
     },
     attributes,
+    products: [],
   });
 
-  createNode(nodeData);
+  if (event.ProductDetail && event.ProductDetail.length) {
+    event.ProductDetail.map(product => {
+      const productAttributes = getAttributes(product);
+      nodeData.products.push(productAttributes);
+    });
+  }
+
+  return nodeData;
 };
 
 module.exports = processEvent;
