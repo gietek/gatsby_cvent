@@ -17,10 +17,34 @@ const EVENT_ATTRIBUTES = [
   'CountryCode',
 ];
 
-const EVENT_TYPE = 'CventEvent';
+const FEE_ATTRIBUTES = [
+  'FeeID',
+  'FeeName',
+  // 'FeeAmount',
+  // 'ProductID',
+  // 'ProductName',
+  // 'Active',
+];
+
+const PRODUCT_ATTRIBUTES = [
+  'ProductId',
+  'ProductName',
+  // 'ProductCode',
+  // 'ProductType',
+  // 'ProductDescription',
+  // 'StartTime',
+  // 'EndTime',
+  // 'Status',
+  // 'Capacity',
+  // 'IsIncluded',
+];
+
+const EVENT_TYPE = 'CventContent';
 
 module.exports = {
   DATE_RANGES,
   EVENT_ATTRIBUTES,
   EVENT_TYPE,
+  FEE_ATTRIBUTES,
+  PRODUCT_ATTRIBUTES,
 };
