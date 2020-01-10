@@ -2,9 +2,12 @@ require('dotenv').config();
 
 const login = require('./helpers/login');
 const listEventIds = require('./helpers/listEventIds');
+const listSpeakerIds = require('./helpers/listSpeakerIds');
 const fetchEvent = require('./helpers/fetchEvent');
 const fetchEventDetails = require('./helpers/fetchEventDetails');
 const processEvent = require('./helpers/processEvent');
+const fetchSpeakers = require('./helpers/fetchSpeakers');
+const convertSpeakers = require('./helpers/convertSpeakers');
 
 exports.sourceNodes = async ({
   actions,
@@ -36,6 +39,10 @@ exports.sourceNodes = async ({
       eventIds.map(eventId => fetchEventDetails(sessionHeader, eventId))
     );
 
+    const speakerIds = await listSpeakerIds(sessionHeader);
+    const speakersData = await fetchSpeakers(sessionHeader, speakerIds);
+    const sessionSpeakers = convertSpeakers(speakersData);
+
     eventsDetailsList.forEach(item => {
       const eventId = item._attributes.Id;
 
@@ -49,7 +56,13 @@ exports.sourceNodes = async ({
 
     eventsList.forEach(event => {
       const eventId = event._attributes.Id;
-      const nodeData = processEvent(event, details[eventId], createNodeId, createContentDigest);
+      const nodeData = processEvent({
+        event,
+        details: details[eventId],
+        sessions: sessionSpeakers,
+        createNodeId,
+        createContentDigest,
+      });
 
       createNode(nodeData);
     });

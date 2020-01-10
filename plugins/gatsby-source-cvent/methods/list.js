@@ -8,7 +8,7 @@ const xml = `<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"
 </soap:Header>
 <soap:Body>
    <ns:GetUpdated>
-      <ns:ObjectType>Event</ns:ObjectType>
+      <ns:ObjectType>%%OBJECT_TYPE%%</ns:ObjectType>
       <ns:StartDate>%%START_DATE%%</ns:StartDate>
       <ns:EndDate>%%END_DATE%%</ns:EndDate>
    </ns:GetUpdated>

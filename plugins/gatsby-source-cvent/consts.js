@@ -39,6 +39,24 @@ const PRODUCT_ATTRIBUTES = [
   'IsIncluded',
 ];
 
+const SPEAKER_ATTRIBUTES = [
+  'Id',
+  'FirstName',
+  'LastName',
+  'EmailAddress',
+  'Prefix',
+  'Designation',
+  'Company',
+  'Title',
+  'SpeakerCode',
+  'FacebookURL',
+  'LinkedInURL',
+  'TwitterURL',
+  'ProfileImageURL',
+  'Biography',
+  'InternalNote',
+];
+
 const EVENT_TYPE = 'CventContent';
 
 module.exports = {
@@ -47,4 +65,5 @@ module.exports = {
   EVENT_TYPE,
   FEE_ATTRIBUTES,
   PRODUCT_ATTRIBUTES,
+  SPEAKER_ATTRIBUTES,
 };

@@ -6,14 +6,24 @@ const {
   PRODUCT_ATTRIBUTES,
 } = require('../consts');
 
-const processEvent = (event, eventDetails, createNodeId, createContentDigest) => {
+const processEvent = ({
+  event,
+  details,
+  sessions,
+  createNodeId,
+  createContentDigest
+}) => {
   const attributes = getAttributes(event, EVENT_ATTRIBUTES);
 
-  const fees = eventDetails.fees.map(item => getAttributes(item, FEE_ATTRIBUTES));
-  const staffDetail = eventDetails.staffDetail.map(item => getAttributes(item));
+  const fees = details.fees.map(item => getAttributes(item, FEE_ATTRIBUTES));
+  const staffDetail = details.staffDetail.map(item => getAttributes(item));
   const products = event.ProductDetail && event.ProductDetail.length ?
-    event.ProductDetail.map(item => getAttributes(item, PRODUCT_ATTRIBUTES)) :
-    [];
+    event.ProductDetail.map(item => {
+      const productAttributes = getAttributes(item, PRODUCT_ATTRIBUTES);
+      productAttributes.speakers = sessions[productAttributes.productId] || [];
+
+      return productAttributes;
+    }) : [];
 
   const nodeId = createNodeId(`${EVENT_TYPE}-${attributes.id}`)
   const nodeData = {
