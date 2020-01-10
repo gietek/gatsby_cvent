@@ -3,10 +3,8 @@ require('dotenv').config();
 const login = require('./helpers/login');
 const listEventIds = require('./helpers/listEventIds');
 const listSpeakerIds = require('./helpers/listSpeakerIds');
-const fetchEvent = require('./helpers/fetchEvent');
-const fetchEventDetails = require('./helpers/fetchEventDetails');
 const processEvent = require('./helpers/processEvent');
-const fetchSpeakers = require('./helpers/fetchSpeakers');
+const fetchObjectsById = require('./helpers/fetchObjectsById');
 const convertSpeakers = require('./helpers/convertSpeakers');
 const forceArray = require('./helpers/forceArray');
 
@@ -33,18 +31,14 @@ exports.sourceNodes = async ({
       return accumulator;
     }, {});
 
-    const eventsList = await Promise.all(
-      eventIds.map(eventId => fetchEvent(sessionHeader, eventId))
-    );
-    const eventsDetailsList = await Promise.all(
-      eventIds.map(eventId => fetchEventDetails(sessionHeader, eventId))
-    );
+    const eventsList = await fetchObjectsById(sessionHeader, eventIds, 'Event');
+    const eventsDetailsList = await fetchObjectsById(sessionHeader, eventIds, 'EventDetail');
 
     const speakerIds = await listSpeakerIds(sessionHeader);
-    const speakersData = await fetchSpeakers(sessionHeader, speakerIds);
+    const speakersData = await fetchObjectsById(sessionHeader, speakerIds, 'Speaker');
     const sessionSpeakers = convertSpeakers(speakersData);
 
-    eventsDetailsList.forEach(item => {
+    forceArray(eventsDetailsList).forEach(item => {
       const eventId = item._attributes.Id;
 
       if (item.StaffDetail) {
@@ -55,7 +49,7 @@ exports.sourceNodes = async ({
       }
     });
 
-    eventsList.forEach(event => {
+    forceArray(eventsList).forEach(event => {
       const eventId = event._attributes.Id;
       const nodeData = processEvent({
         event,

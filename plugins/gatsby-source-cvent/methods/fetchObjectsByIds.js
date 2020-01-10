@@ -11,7 +11,7 @@ const xml = `
       <ns:Retrieve>
          <ns:ObjectType>%%OBJECT_TYPE%%</ns:ObjectType>
          <ns1:Ids>
-            %%SPEAKER_IDS%%
+            %%OBJECT_IDS%%
          </ns1:Ids>
       </ns:Retrieve>
    </soap:Body>
