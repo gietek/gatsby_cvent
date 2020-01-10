@@ -8,6 +8,7 @@ const fetchEventDetails = require('./helpers/fetchEventDetails');
 const processEvent = require('./helpers/processEvent');
 const fetchSpeakers = require('./helpers/fetchSpeakers');
 const convertSpeakers = require('./helpers/convertSpeakers');
+const forceArray = require('./helpers/forceArray');
 
 exports.sourceNodes = async ({
   actions,
@@ -47,10 +48,10 @@ exports.sourceNodes = async ({
       const eventId = item._attributes.Id;
 
       if (item.StaffDetail) {
-        details[eventId].staffDetail = item.StaffDetail;
+        details[eventId].staffDetail = forceArray(item.StaffDetail);
       }
       if (item.Fees) {
-        details[eventId].fees = item.Fees;
+        details[eventId].fees = forceArray(item.Fees);
       }
     });
 
