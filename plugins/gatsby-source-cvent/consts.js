@@ -20,23 +20,23 @@ const EVENT_ATTRIBUTES = [
 const FEE_ATTRIBUTES = [
   'FeeID',
   'FeeName',
-  // 'FeeAmount',
-  // 'ProductID',
-  // 'ProductName',
-  // 'Active',
+  'FeeAmount',
+  'ProductID',
+  'ProductName',
+  'Active',
 ];
 
 const PRODUCT_ATTRIBUTES = [
   'ProductId',
   'ProductName',
-  // 'ProductCode',
-  // 'ProductType',
-  // 'ProductDescription',
-  // 'StartTime',
-  // 'EndTime',
-  // 'Status',
-  // 'Capacity',
-  // 'IsIncluded',
+  'ProductCode',
+  'ProductType',
+  'ProductDescription',
+  'StartTime',
+  'EndTime',
+  'Status',
+  'Capacity',
+  'IsIncluded',
 ];
 
 const EVENT_TYPE = 'CventContent';
